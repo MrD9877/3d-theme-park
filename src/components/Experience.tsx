@@ -5,7 +5,7 @@ import Platform from "./Platform";
 import * as THREE from "three";
 import { Depth, LayerMaterial, Noise } from "lamina";
 import { useFrame } from "@react-three/fiber";
-import { IceCream } from "./beach/IceCream";
+import { PresentationControls, Stage } from "@react-three/drei";
 
 function Background() {
   const SPEED = 0.1;
@@ -34,7 +34,11 @@ export default function Experience() {
     <>
       <ambientLight intensity={0.4} />
       <directionalLight position={[0, 20, 20]} intensity={2} />
-      <Platform />
+
+      {/* <Podium /> */}
+      <PresentationControls speed={1.5} global polar={[0, 0]}>
+        <Platform />
+      </PresentationControls>
       <Background />
     </>
   );

@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Beach from "./beach/Beach";
 import { animated, useSpring } from "@react-spring/three";
 import Food from "./food/Food";
+import Park from "./park/Park";
+import Horror from "./horror/Horror";
+import { Float } from "@react-three/drei";
+import { Cauldron } from "./horror/Cauldron";
 
 export default function Platform() {
-  const ROTATION_DELAY = 3000;
+  const ROTATION_DELAY = 4000;
+  const [paused, setPaused] = useState(false);
+  const time = useRef<NodeJS.Timeout>(null);
+
   const { carouselRotation } = useSpring({
     from: {
       carouselRotation: 0,
@@ -34,12 +41,24 @@ export default function Platform() {
     },
     loop: true,
     immediate: true,
-    pause: true,
   });
+  useEffect(() => {
+    if (paused) {
+      carouselRotation.pause();
+      time.current = setTimeout(() => {
+        carouselRotation.resume();
+      }, 5000);
+    } else {
+      carouselRotation.resume();
+    }
+    return () => {
+      if (time.current) clearTimeout(time.current);
+    };
+  }, [paused, carouselRotation]);
 
   return (
     <>
-      <group rotation-y={-Math.PI / 4}>
+      <group rotation-y={-Math.PI / 4} onPointerDown={() => setPaused(true)} onPointerUp={() => setPaused(false)}>
         <animated.group rotation-y={carouselRotation}>
           <group>
             <mesh position={[0, -2, 0]}>
@@ -57,6 +76,11 @@ export default function Platform() {
           </group>
           <Beach />
           <Food />
+          <Park />
+          <Horror />
+          <Float speed={-0.5} floatIntensity={0.01}>
+            <Cauldron position={[3, 2, 9]} scale={1.7} />
+          </Float>
         </animated.group>
       </group>
     </>

@@ -1,8 +1,7 @@
 import React from "react";
 import { Duck } from "./Duck";
 import { BeachBall } from "./BeachBall";
-import { useControls } from "leva";
-import { animated, useSpring } from "@react-spring/three";
+import { useSpring } from "@react-spring/three";
 
 export default function BallGame() {
   const { beachBallPosition } = useSpring({

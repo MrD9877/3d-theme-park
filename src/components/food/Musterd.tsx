@@ -8,7 +8,6 @@ import React, { JSX } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { animated } from "@react-spring/three";
-import { useControls } from "leva";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -21,7 +20,6 @@ type GLTFResult = GLTF & {
 
 export function Musterd(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/models/bottle-musterd/model.gltf") as unknown as GLTFResult;
-  const { py } = useControls({ py: 0, rotation: 0 });
   return (
     <animated.group {...props} dispose={null}>
       <mesh geometry={nodes.bottleMusterd.geometry} material={materials.yellow} scale={0.21} position={[0.5, -0.2, 0]} />
