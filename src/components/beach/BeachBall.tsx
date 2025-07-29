@@ -7,6 +7,7 @@ import * as THREE from "three";
 import React, { JSX } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { animated } from "@react-spring/three";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -26,12 +27,12 @@ type GLTFResult = GLTF & {
 export function BeachBall(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/models/beach-ball/model.gltf") as unknown as GLTFResult;
   return (
-    <group {...props} dispose={null}>
+    <animated.group {...props} dispose={null}>
       <mesh geometry={nodes.Sphere000.geometry} material={materials["White.008"]} />
       <mesh geometry={nodes.Sphere000_1.geometry} material={materials["Blue.004"]} />
       <mesh geometry={nodes.Sphere000_2.geometry} material={materials["Red.003"]} />
       <mesh geometry={nodes.Sphere000_3.geometry} material={materials["Yellow.012"]} />
-    </group>
+    </animated.group>
   );
 }
 
